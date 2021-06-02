@@ -6,11 +6,11 @@ import LocationMarker from "./LocationMarker";
 export default function Map(){
 
 const [viewport, setViewport] = useState({
-    latitude: 38.897957,
-    longitude: -77.036560,
+    latitude: -42.35,
+    longitude: -70.9,
     width: '100vw',
     height: '100vh',
-    zoom: 12
+    zoom: 9
   });
 
     return (
@@ -21,7 +21,13 @@ const [viewport, setViewport] = useState({
                         onViewportChange={viewport => {
                             setViewport(viewport);
                         }}>
-                <LocationMarker latitude={viewport.latitude} longitude={viewport.longitude}/>
+                <LocationMarker
+                    latitude={viewport.latitude}
+                    longitude={viewport.longitude}
+                    draggable={false}
+                    offsetTop={-30}
+                    offsetLeft={-30}
+                />
             </ReactMapGL>
         </div>
     );
