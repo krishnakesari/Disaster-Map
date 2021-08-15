@@ -1,30 +1,24 @@
-import React , {useState, useEffect} from 'react';
-import Map from './components/maps';
-import Loader from './components/Loader'
+import React from 'react';
+import axios from 'axios';
 
-function App() {
+export default class PersonList extends React.Component {
+  state = {
+    persons: []
+  }
 
-    const [eventData, setEventData] = useState([])
-    const [loading, setLoading] = useState(false)
+  componentDidMount() {
+    axios.get(`https://jsonplaceholder.typicode.com/users`)
+      .then(res => {
+        const persons = res.data;
+        this.setState({ persons });
+      })
+  }
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            setLoading(true)
-            const res = await fetch('https://eonet.sci.gsfc.nasa.gov/api/v2.1/events')
-            const { events } = await res.json()
-
-            setEventData(events)
-            setLoading(false)
-        }
-
-        fetchEvents()
-    },[])
-
+  render() {
     return (
-        <div>
-            { !loading ? <Map eventData={eventData}/> : <Loader/>}
-        </div>
-    );
+      <ul>
+        { this.state.persons.map(person => <li>{person.company.name}</li>)}
+      </ul>
+    )
+  }
 }
-
-export default App;
